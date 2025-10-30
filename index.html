@@ -1,136 +1,238 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مكتبة الهوية الوطنية | مدرسة المنارة الخاصة - فرع الشامخة</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    body {font-family: 'Cairo', sans-serif;background: #f9f9f9;margin: 0;padding: 0;color: #333;text-align: right;direction: rtl;}
-    header {position: relative;background: linear-gradient(90deg, #00732f, #ff0000, #000000);color: #fff;text-align: center;padding: 40px 15px;}
-    header::after {content: "";position: absolute;inset: 0;background: rgba(0, 0, 0, 0.2);}
-    header h1, header p {position: relative;z-index: 2;}
-    header h1 {margin: 0;font-size: 2.2rem;font-weight: 700;}
-    header p {margin-top: 8px;font-size: 1.2rem;font-weight: 600;}
-    section {padding: 30px 8%;}
-    h2 {color: #00732f;border-bottom: 3px solid #00732f;padding-bottom: 5px;font-size: 1.5rem;margin-bottom: 20px;}
-    .book-container {display: grid;grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));gap: 20px;}
-    .book-card {background: #fff;padding: 20px;border-radius: 14px;box-shadow: 0 4px 10px rgba(0,0,0,0.1);transition: transform 0.3s ease, box-shadow 0.3s ease;}
-    .book-card:hover {transform: translateY(-5px);box-shadow: 0 8px 15px rgba(0,0,0,0.15);}
-    .book-card h3 {margin: 0 0 10px 0;color: #ff0000;font-size: 1.1rem;}
-    .book-card p {margin: 0 0 10px 0;line-height: 1.6;}
-    .book-card a {text-decoration: none;color: #00732f;font-weight: bold;}
-    .video-section iframe {width: 100%;height: 320px;margin-bottom: 20px;border-radius: 12px;border: none;}
-    footer {text-align: center;padding: 20px;background: #00732f;color: #fff;font-weight: 600;}
-    footer p {margin: 5px 0;}
-    @media (max-width: 768px) {header h1 {font-size: 1.8rem;}section {padding: 20px;}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مكتبة الهوية الوطنية | مدرسة المنارة الخاصة - فرع الشامخة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Layout */
+    :root { --green: #00732f; --red: #ff0000; --black: #000000; --bg: #f9f9f9; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      color: #333;
+      text-align: right;
+      direction: rtl;
+
+      /* Make footer stay at bottom even with short content */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      position: relative;
+      background: linear-gradient(90deg, var(--green), var(--red), var(--black));
+      color: #fff;
+      text-align: center;
+      padding: 40px 15px;
+      overflow: hidden;
+    }
+    /* subtle dark overlay but limited to header */
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.15);
+      z-index: 1;
+      pointer-events: none;
+    }
+    header h1, header p { position: relative; z-index: 2; margin: 0; }
+    header h1 { font-size: 2.2rem; font-weight: 700; }
+    header p { margin-top: 8px; font-size: 1.1rem; font-weight: 600; }
+
+    /* Main area grows to push footer down */
+    main { flex: 1; padding: 30px 8%; }
+
+    h2 {
+      color: var(--green);
+      border-bottom: 3px solid var(--green);
+      padding-bottom: 5px;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .book-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .book-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .book-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .book-card h3 { margin: 0 0 10px 0; color: var(--red); font-size: 1.05rem; }
+    .book-card p { margin: 0 0 10px 0; line-height: 1.6; }
+    .book-card a { text-decoration: none; color: var(--green); font-weight: bold; }
+
+    /* Responsive video wrapper for correct aspect ratio */
+    .video-section .video-wrapper {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      /* keep 16:9 ratio */
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video-section .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 15px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+      margin-top: auto; /* push to bottom */
+    }
+    footer p { margin: 5px 0; }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.8rem; }
+      main { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
-<header>
+  <header>
     <h1>مكتبة الهوية الوطنية</h1>
     <p>مدرسة المنارة الخاصة / فرع الشامخة</p>
-</header>
-<section>
-    <h2>1️⃣ القيادة والرؤية الوطنية</h2>
-    <div class="book-container">
+  </header>
+
+  <main>
+    <section>
+      <h2>1️⃣ القيادة والرؤية الوطنية</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>قصتي – صاحب السمو الشيخ محمد بن راشد آل مكتوم</h3>
-            <p>سيرة ذاتية تحكي خمسين قصة ملهمة من رحلة بناء دولة الإمارات ونهضتها.</p>
-            <a href="https://mbrl.ae/ar/books/قصتي" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>قصتي – صاحب السمو الشيخ محمد بن راشد آل مكتوم</h3>
+          <p>سيرة ذاتية تحكي خمسين قصة ملهمة من رحلة بناء دولة الإمارات ونهضتها.</p>
+          <a href="https://mbrl.ae/ar/books/قصتي" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
         <div class="book-card">
-            <h3>مسيرة الإمارات – وزارة شؤون الرئاسة</h3>
-            <p>كتاب يوثق الإنجازات الوطنية لدولة الإمارات منذ تأسيسها وحتى اليوم.</p>
-            <a href="https://www.uae.gov.ae/leadership" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>مسيرة الإمارات – وزارة شؤون الرئاسة</h3>
+          <p>كتاب يوثق الإنجازات الوطنية لدولة الإمارات منذ تأسيسها وحتى اليوم.</p>
+          <a href="https://www.uae.gov.ae/leadership" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
-    </div>
-</section>
-<section>
-    <h2>2️⃣ السنع الإماراتي والتراث الأصيل</h2>
-    <div class="book-container">
+      </div>
+    </section>
+
+    <section>
+      <h2>2️⃣ السنع الإماراتي والتراث الأصيل</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>التراث الإماراتي الأصيل – مركز التراث</h3>
-            <p>يستعرض العادات والتقاليد والحِرف الأصيلة في المجتمع الإماراتي.</p>
-            <a href="https://www.moc.gov.ae/ar/heritage" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>التراث الإماراتي الأصيل – مركز التراث</h3>
+          <p>يستعرض العادات والتقاليد والحِرف الأصيلة في المجتمع الإماراتي.</p>
+          <a href="https://www.moc.gov.ae/ar/heritage" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
         <div class="book-card">
-            <h3>الأمثال الشعبية الإماراتية</h3>
-            <p>مجموعة من الأمثال الشعبية التي تعكس الحكمة والقيم في المجتمع الإماراتي.</p>
-            <a href="https://www.uaeheritage.org/library" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>الأمثال الشعبية الإماراتية</h3>
+          <p>مجموعة من الأمثال الشعبية التي تعكس الحكمة والقيم في المجتمع الإماراتي.</p>
+          <a href="https://www.uaeheritage.org/library" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
-    </div>
-</section>
-<section>
-    <h2>3️⃣ القيم والمواطنة الإيجابية</h2>
-    <div class="book-container">
+      </div>
+    </section>
+
+    <section>
+      <h2>3️⃣ القيم والمواطنة الإيجابية</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>قيمنا الوطنية – دائرة التعليم والمعرفة</h3>
-            <p>توضح المبادئ والقيم التي تعزز الانتماء والمسؤولية المجتمعية في الإمارات.</p>
-            <a href="https://www.adek.gov.ae/ar/national-values" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>قيمنا الوطنية – دائرة التعليم والمعرفة</h3>
+          <p>توضح المبادئ والقيم التي تعزز الانتماء والمسؤولية المجتمعية في الإمارات.</p>
+          <a href="https://www.adek.gov.ae/ar/national-values" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
-    </div>
-</section>
-<section>
-    <h2>4️⃣ اللغة العربية والاعتزاز بها</h2>
-    <div class="book-container">
+      </div>
+    </section>
+
+    <section>
+      <h2>4️⃣ اللغة العربية والاعتزاز بها</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>اللغة العربية في الإمارات – وزارة التربية والتعليم</h3>
-            <p>دليل شامل لتعليم اللغة العربية والمحافظة على الهوية اللغوية الوطنية.</p>
-            <a href="https://www.moe.gov.ae/ar/arabic-language" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>اللغة العربية في الإمارات – وزارة التربية والتعليم</h3>
+          <p>دليل شامل لتعليم اللغة العربية والمحافظة على الهوية اللغوية الوطنية.</p>
+          <a href="https://www.moe.gov.ae/ar/arabic-language" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
-    </div>
-</section>
-<section>
-    <h2>5️⃣ الانتماء الوطني والإنجازات</h2>
-    <div class="book-container">
+      </div>
+    </section>
+
+    <section>
+      <h2>5️⃣ الانتماء الوطني والإنجازات</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>إنجازات وطنية – وزارة شؤون الرئاسة</h3>
-            <p>تقرير موثق عن المشاريع الوطنية الكبرى وإنجازات دولة الإمارات التنموية.</p>
-            <a href="https://www.uae.gov.ae/ar/projects" target="_blank">رابط الكتاب الرسمي</a>
+          <h3>إنجازات وطنية – وزارة شؤون الرئاسة</h3>
+          <p>تقرير موثق عن المشاريع الوطنية الكبرى وإنجازات دولة الإمارات التنموية.</p>
+          <a href="https://www.uae.gov.ae/ar/projects" target="_blank" rel="noopener">رابط الكتاب الرسمي</a>
         </div>
-    </div>
-</section>
-<section>
-    <h2>6️⃣ الاستدامة والمسؤولية المجتمعية 🌿</h2>
-    <div class="book-container">
+      </div>
+    </section>
+
+    <section>
+      <h2>6️⃣ الاستدامة والمسؤولية المجتمعية 🌿</h2>
+      <div class="book-container">
         <div class="book-card">
-            <h3>جائزة الشيخ حمدان بن زايد للبيئة</h3>
-            <p>توثيق لمبادرات الاستدامة وحماية البيئة في الإمارات على مدار السنوات.</p>
-            <a href="https://www.hamdangreenaward.ae/" target="_blank">الرابط الرسمي</a>
+          <h3>جائزة الشيخ حمدان بن زايد للبيئة</h3>
+          <p>توثيق لمبادرات الاستدامة وحماية البيئة في الإمارات على مدار السنوات.</p>
+          <a href="https://www.hamdangreenaward.ae/" target="_blank" rel="noopener">الرابط الرسمي</a>
         </div>
-    </div>
-</section>
-<section class="video-section">
-    <h2>🎥 الركن المرئي</h2>
-    <iframe src="https://www.youtube.com/embed/7l9p0xVxFm8" title="روح الاتحاد – وثائقي الإمارات" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/3E6QjO1iDgk" title="وثائقي الهوية الوطنية" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/2n4q_TD3i0Q" title="جائزة الشيخ حمدان البيئية" allowfullscreen></iframe>
-</section>
-<footer>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <h2>🎥 الركن المرئي</h2>
+
+      <!-- responsive wrappers: improves playback on mobile and respect aspect ratio -->
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/7l9p0xVxFm8"
+          title="روح الاتحاد – وثائقي الإمارات"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/3E6QjO1iDgk"
+          title="وثائقي الهوية الوطنية"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/2n4q_TD3i0Q"
+          title="جائزة الشيخ حمدان البيئية"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
     <p>© 2025 جميع الحقوق محفوظة</p>
     <p>مكتبة الهوية الوطنية – مدرسة المنارة الخاصة / فرع الشامخة</p>
     <p>تصميم وتنفيذ قسم تقنية المعلومات</p>
-</footer>
+  </footer>
 </body>
 </html>
-````markdown name=README.md
-# مكتبة الهوية الوطنية – مدرسة المنارة الخاصة / فرع الشامخة
-
-هذا المشروع يمثل صفحة ويب تعليمية تحتوي على مجموعة من الكتب والفيديوهات التي تعزز الهوية الوطنية لدولة الإمارات العربية المتحدة.
-
-## 📘 المحتوى
-- القيادة والرؤية الوطنية
-- السنع والتراث الأصيل
-- القيم والمواطنة الإيجابية
-- اللغة العربية
-- الإنجازات الوطنية
-- الاستدامة والمسؤولية المجتمعية
-
-## 🚀 كيفية النشر على GitHub Pages
-1. ارفع هذا الملف إلى مستودع جديد في GitHub.
-2. من إعدادات المستودع → Pages → اختر الفرع `main` والمجلد `/ (root)`.
-3. بعد الحفظ، سيظهر رابط مباشر لموقعك على الإنترنت.
-
----
-© 2025 مدرسة المنارة الخاصة – قسم تقنية المعلومات
